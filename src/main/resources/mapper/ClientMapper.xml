@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.keyi.db_goods.mapper.ClientMapper">
+    <resultMap id="getClientAll" type="com.keyi.db_goods.entity.Client">
+        <id property="cid" column="cid"/>
+        <result property="client_id" column="client_id" javaType="java.lang.Integer"/>
+        <result property="client_name" column="client_name" javaType="java.lang.String"/>
+        <result property="client_mobile" column="client_mobile" javaType="java.lang.String" />
+    </resultMap>
+
+    <select id="getClientAll" resultMap="getClientAll">
+        SELECT `cid`, `client_id`, `client_name`, `client_mobile`
+        FROM clients
+    </select>
+</mapper>
