@@ -19,7 +19,6 @@ public class ClientController {
     @Autowired
     private ClientService clientService;
 
-
     @GetMapping("/")
     public List<Client> getClientAll() {
         return clientMapper.getClientAll();

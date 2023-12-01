@@ -15,7 +15,7 @@ public class ClientService {
             clientMapper.add(client);
             return "保存成功";
         }else {
-            return "该账号已被注册";
+            return "该客户已存在";
         }
     }
 
@@ -24,7 +24,7 @@ public class ClientService {
             clientMapper.delete(client_id);
             return "删除成功";
         }else {
-            return "该账号不存在";
+            return "该客户不存在";
         }
     }
 
@@ -33,7 +33,7 @@ public class ClientService {
             clientMapper.update(client);
             return "修改成功";
         }else {
-            return "该账号不存在";
+            return "该客户不存在";
         }
     }
 }
