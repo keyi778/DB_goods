@@ -9,11 +9,19 @@
         <result property="client_mobile" column="client_mobile" javaType="java.lang.String" />
     </resultMap>
 
-    <insert id="add" parameterType="com.keyi.db_goods.entity.Client">
+    <!--1、增加-->
+    <insert id="insert" parameterType="com.keyi.db_goods.entity.Client">
         INSERT INTO `clients`(`client_id`,`client_name`,`client_mobile`)
             VALUES(#{client_id},#{client_name},#{client_mobile})
     </insert>
 
+    <!--2、删除-->
+    <delete id="delete">
+        DELETE FROM clients
+        WHERE client_id = #{client_id}
+    </delete>
+
+    <!--3、修改-->
     <update id="update" parameterType="com.keyi.db_goods.entity.Client">
         UPDATE `clients`
         SET
@@ -24,22 +32,28 @@
             client_mobile = #{client_mobile}
         </if>
         WHERE
-            client_id = #{client_id}
+        client_id = #{client_id}
     </update>
 
-    <delete id="delete">
-        DELETE FROM clients
-        WHERE client_id = #{client_id}
-    </delete>
+    <update id="incrementReset">
+        ALTER TABLE clients AUTO_INCREMENT = 1
+    </update>
 
+    <!--4、查询-->
     <select id="getClientAll" resultMap="getClientAll">
-        SELECT `cid`, `client_id`, `client_name`, `client_mobile`
+        SELECT *
         FROM clients
+        limit #{pageNum}, #{pageSize}
     </select>
 
-    <select id="getClientNum" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+    <select id="isExitById" resultType="java.lang.Integer" parameterType="java.lang.Integer">
         SELECT COUNT(*)
         FROM clients
         WHERE client_id = #{client_id}
+    </select>
+
+    <select id="clientTotalNum" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM clients
     </select>
 </mapper>
