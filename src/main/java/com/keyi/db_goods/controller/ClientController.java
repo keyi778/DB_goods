@@ -52,10 +52,10 @@ public class ClientController {
     // 4、查询
     @GetMapping("/page")
     public Map<String, Object> getByPage(@RequestParam Integer pageNum,
-                                         @RequestParam Integer pageSize
-                                         ) {
+                                         @RequestParam Integer pageSize,
+                                         @RequestParam String client_name) {
         pageNum = (pageNum - 1) * pageSize;
-        List<Client> data = clientMapper.getClientAll(pageNum, pageSize);
+        List<Client> data = clientMapper.getClientAll(pageNum, pageSize, client_name);
         Integer total = clientMapper.clientTotalNum();
         Map<String, Object> res = new HashMap<>();
         res.put("data", data);

@@ -43,6 +43,7 @@
     <select id="getClientAll" resultMap="getClientAll">
         SELECT *
         FROM clients
+        WHERE client_name like concat('%', #{client_name}, '%')
         limit #{pageNum}, #{pageSize}
     </select>
 

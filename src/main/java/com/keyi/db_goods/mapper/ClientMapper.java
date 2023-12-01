@@ -20,7 +20,7 @@ public interface ClientMapper {
 
     Integer incrementReset();
     // 4、查询
-    List<Client> getClientAll(Integer pageNum,Integer pageSize);//查询所有用户记录
+    List<Client> getClientAll(Integer pageNum,Integer pageSize, String client_name);//查询所有用户记录
 
     Integer isExitById(Integer client_id);//查询用户数量
 
