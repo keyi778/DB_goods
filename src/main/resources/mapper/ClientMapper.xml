@@ -9,8 +9,37 @@
         <result property="client_mobile" column="client_mobile" javaType="java.lang.String" />
     </resultMap>
 
+    <insert id="add" parameterType="com.keyi.db_goods.entity.Client">
+        INSERT INTO `clients`(`client_id`,`client_name`,`client_mobile`)
+            VALUES(#{client_id},#{client_name},#{client_mobile})
+    </insert>
+
+    <update id="update" parameterType="com.keyi.db_goods.entity.Client">
+        UPDATE `clients`
+        SET
+        <if test="client_name != null">
+            client_name = #{client_name},
+        </if>
+        <if test="client_mobile != null">
+            client_mobile = #{client_mobile}
+        </if>
+        WHERE
+            client_id = #{client_id}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM clients
+        WHERE client_id = #{client_id}
+    </delete>
+
     <select id="getClientAll" resultMap="getClientAll">
         SELECT `cid`, `client_id`, `client_name`, `client_mobile`
         FROM clients
+    </select>
+
+    <select id="getClientNum" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM clients
+        WHERE client_id = #{client_id}
     </select>
 </mapper>
