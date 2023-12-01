@@ -8,6 +8,4 @@ public class Client {
     private Integer client_id;
     private String client_name;
     private String client_mobile;
-
-
 }
