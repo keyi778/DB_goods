@@ -6,7 +6,9 @@ import com.keyi.db_goods.service.GoodService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/good")
@@ -18,8 +20,8 @@ public class GoodController {
 
     // 1、增加
     @PostMapping
-    public String add(@RequestBody Good good) {
-        return goodService.add(good);
+    public String insert(@RequestBody Good good) {
+        return goodService.insert(good);
     }
 
     // 2、删除
@@ -43,5 +45,16 @@ public class GoodController {
     @GetMapping("/")
     public List<Good> getClientAll() {
         return goodMapper.getGoodAll();
+    }
+
+    @GetMapping("/page")
+    public Map<String, Object> getPage(@RequestParam Integer pageNum,@RequestParam Integer pageSize){
+        pageNum = (pageNum-1)*pageSize;
+        List<Good> data=goodMapper.selectPage(pageNum,pageSize);
+        Integer total = goodMapper.TotalNum();
+        Map<String, Object> res = new HashMap<>();
+        res.put("data",data);
+        res.put("total",total);
+        return res;
     }
 }

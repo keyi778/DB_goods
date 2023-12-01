@@ -11,9 +11,9 @@ public class GoodService {
     private GoodMapper goodMapper;
 
     // 1、增加
-    public String add(Good good) {
+    public String insert(Good good) {
         if (goodMapper.isExistByName(good.getGood_name()) == 0) {
-            goodMapper.add(good);
+            goodMapper.insert(good);
             return "保存成功";
         } else {
             return "该商品已存在";

@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.keyi.db_goods.mapper.GoodMapper">
     <!--1、增加-->
-    <insert id="add" parameterType="com.keyi.db_goods.entity.Good">
+    <insert id="insert" parameterType="com.keyi.db_goods.entity.Good">
         INSERT INTO `goods`(`good_id`, `good_name`, `good_price`)
         VALUES(#{good_id},#{good_name},#{good_price})
     </insert>
@@ -46,9 +46,20 @@
         FROM goods
     </select>
 
-    <select id="TotalPageNum" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+    <select id="TotalNum" resultType="java.lang.Integer" parameterType="java.lang.Integer">
         SELECT COUNT(*)
         FROM goods
+    </select>
+
+    <resultMap id="selectPage" type="com.keyi.db_goods.entity.Good">
+        <id property="good_id" column="good_id"/>
+        <result property="good_name" column="good_name" javaType="java.lang.String"/>
+        <result property="good_price" column="good_price" javaType="java.lang.Double"/>
+    </resultMap>
+    <select id="selectPage" resultMap="selectPage">
+        SELECT *
+        FROM goods
+        LIMIT #{pageNum}, #{pageSize}
     </select>
 
     <select id="isExistByName" resultType="java.lang.Integer" parameterType="java.lang.String">
