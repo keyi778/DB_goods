@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.keyi.db_goods.entity.Client;
-import com.keyi.db_goods.mapper.ClientMapper;
 import com.keyi.db_goods.service.ClientService;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +20,12 @@ public class ClientController {
     // 1、增加
     @PostMapping
     public boolean save(@RequestBody Client client) {
-        return clientService.save(client);
+        QueryWrapper<Client> wrapper = new QueryWrapper<>();
+        wrapper.eq("clientId", client.getClientId());
+        if (clientService.exists(wrapper))
+            return false;
+        else
+            return clientService.save(client);
     }
 
     // 2、删除
@@ -35,7 +39,12 @@ public class ClientController {
     // 3、修改
     @PostMapping("/update")
     public boolean update(@RequestBody Client client) {
-        return clientService.updateById(client);
+        QueryWrapper<Client> wrapper = new QueryWrapper<>();
+        wrapper.eq("clientId", client.getClientId());
+        if (clientService.exists(wrapper))
+            return clientService.updateById(client);
+        else
+            return false;
     }
 
     // 4、查询
@@ -46,20 +55,17 @@ public class ClientController {
 
     @GetMapping("/page")
     public IPage<Client> getPage(@RequestParam Integer pageNum,
-                               @RequestParam Integer pageSize,
-                               @RequestParam(defaultValue = "") String clientId,
-                               @RequestParam(defaultValue = "") String clientName,
-                               @RequestParam(defaultValue = "") String clientMobile) {
+                                 @RequestParam Integer pageSize,
+                                 @RequestParam(defaultValue = "") String clientId,
+                                 @RequestParam(defaultValue = "") String clientName,
+                                 @RequestParam(defaultValue = "") String clientMobile) {
         IPage<Client> page = new Page<>(pageNum, pageSize);
         QueryWrapper<Client> queryWrapper = new QueryWrapper<>();
-        if (!"".equals(clientId))
-        {
-            if(NumberUtils.isParsable(clientId))
-            {
-                queryWrapper.eq("clientId",Integer.valueOf(clientId));
-            }
-            else {
-                queryWrapper.eq("clientId",-1);
+        if (!"".equals(clientId)) {
+            if (NumberUtils.isParsable(clientId)) {
+                queryWrapper.eq("clientId", Integer.valueOf(clientId));
+            } else {
+                queryWrapper.eq("clientId", -1);
             }
         }
         if (!"".equals(clientName))
