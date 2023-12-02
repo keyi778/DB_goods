@@ -14,8 +14,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/good")
 public class GoodController {
-    @Autowired(required = false)
-    private GoodMapper goodMapper;
     @Autowired
     private GoodService goodService;
 

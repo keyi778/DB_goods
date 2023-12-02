@@ -15,7 +15,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/client")
 public class ClientController {
-
     @Autowired
     private ClientService clientService;
 
@@ -58,6 +57,9 @@ public class ClientController {
             if(NumberUtils.isParsable(clientId))
             {
                 queryWrapper.eq("clientId",Integer.valueOf(clientId));
+            }
+            else {
+                queryWrapper.eq("clientId",-1);
             }
         }
         if (!"".equals(clientName))
