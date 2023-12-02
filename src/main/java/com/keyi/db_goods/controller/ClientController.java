@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.keyi.db_goods.entity.Client;
 import com.keyi.db_goods.mapper.ClientMapper;
 import com.keyi.db_goods.service.ClientService;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,8 +15,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/client")
 public class ClientController {
-    @Autowired(required = false)
-    private ClientMapper clientMapper;
 
     @Autowired
     private ClientService clientService;
@@ -49,28 +48,23 @@ public class ClientController {
     @GetMapping("/page")
     public IPage<Client> getPage(@RequestParam Integer pageNum,
                                @RequestParam Integer pageSize,
+                               @RequestParam(defaultValue = "") String clientId,
                                @RequestParam(defaultValue = "") String clientName,
                                @RequestParam(defaultValue = "") String clientMobile) {
         IPage<Client> page = new Page<>(pageNum, pageSize);
         QueryWrapper<Client> queryWrapper = new QueryWrapper<>();
+        if (!"".equals(clientId))
+        {
+            if(NumberUtils.isParsable(clientId))
+            {
+                queryWrapper.eq("clientId",Integer.valueOf(clientId));
+            }
+        }
         if (!"".equals(clientName))
             queryWrapper.like("clientName", clientName);
         if (!"".equals(clientMobile))
             queryWrapper.like("clientMobile", clientMobile);
         return clientService.page(page, queryWrapper);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }

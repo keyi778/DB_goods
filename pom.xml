@@ -56,6 +56,12 @@
 			<version>3.0.0</version>
 		</dependency>
 
+		<!--org.apache.commons-->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+		</dependency>
+
 
 		<dependency>
 			<groupId>org.mybatis.spring.boot</groupId>
